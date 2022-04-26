@@ -9,21 +9,19 @@ import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
 })
 export class HomeComponent implements OnInit {
   
-  slides: string [] = []
+  slides: string [] = ['','../../../assets/Patatas/muchaspatatas.jpg','','../../../assets/Patatas/3patatas.jpg'];
   slideIndex=0;
   captionText : string ="";
   currentSlide : string = "";
-  peliculasPopulares: any;
+  //datospeliculasPopulares: any;
 
   constructor(private clientHttpService: ClientHttpService) { }
 
   private PeliculasPopulares(): void{
-    this.clientHttpService.PeliculasPopulares().subscribe(
-      (data) => {
-        console.log("success");
-        console.log(data.results[0].poster_path);
-        console.log(this.peliculasPopulares);        
-        this.peliculasPopulares = data;
+    this.clientHttpService.getPeliculasPopulares().subscribe(
+      (data : any) => { 
+        this.slides[0] = 'https://www.themoviedb.org/t/p/original' + data.results[0].poster_path;
+        this.slides[2] = 'https://www.themoviedb.org/t/p/original' + data.results[1].poster_path;
       },
       (error) => {
         console.log("failure");
@@ -33,14 +31,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.PeliculasPopulares();
-    console.log(this.peliculasPopulares);
-    // Sacar urls de la API    
-    this.slides = [
-      'https://www.themoviedb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg', 
-      '../../../assets/Patatas/muchaspatatas.jpg',
-      '',
-       '../../../assets/Patatas/3patatas.jpg' 
-    ];
+    
     this.captionText = "Caption Text Test";   
 
     this.showSlidesAuto();
