@@ -1,1 +1,34 @@
-<p>header works!</p>
+<div id = "header">
+    <div>
+        <button class="openModal" (click)="ToggleModal()"><img src="../../../assets/img/BurgerMenu.png"></button>
+    </div>
+    <div class="modal" *ngIf="isShown">
+        <div>
+            <button id="closeModalDesktop" class="closeModal" (click)="ToggleModal()"><img src="../../../assets/img/Cerrar.PNG" height="70"></button>
+        </div>
+        <div class="modalContent">
+            <nav>
+                <a routerLink="" (click)="ToggleModal()">Inicio</a>
+            </nav>
+            <nav>
+                <a routerLink="/search" (click)="ToggleModal()">Buscador</a>
+            </nav>
+            <nav>
+                <a routerLink="/series" (click)="ToggleModal()">Series TV</a>
+            </nav>
+            <nav>
+                <a routerLink="/movies" (click)="ToggleModal()">Peliculas</a>
+            </nav>
+            <nav>
+                <a routerLink="/myList" (click)="ToggleModal()">Mi lista</a>
+            </nav>
+            <nav>
+                <a routerLink="/myProfile" (click)="ToggleModal()">Mi perfil</a>
+            </nav>
+            <div>
+                <button id="closeModalMobile" (click)="ToggleModal()"><img src="../../../assets/img/Cerrar.PNG" height="70"></button>
+            </div>
+        </div>
+      </div>
+            
+</div>

@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  isShown: boolean = false ;
+  closeModalLocation = false;
 
-  ngOnInit(): void {
+  constructor() {}
+  
+  ngOnInit() {
+
+    this.ToggleModal();    
   }
 
+  ToggleModal(this: any) {  
+    this.isShown = ! this.isShown;
+  }
+  
 }

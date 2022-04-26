@@ -1,0 +1,41 @@
+
+#footer {
+  display: none;
+}
+@media only screen and (min-width: 601px) {
+  #footer {
+    display: block;
+    background-color: black;
+    color: white;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  
+  #footerContent {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  #footerNavigation{
+    column-count: 4;
+  }
+  
+  #footerLogo{
+    display: inline;
+  }
+  
+  #externalLinks{
+    float: right;
+    width: 40%;
+  }
+  
+  .redSocialLogo{
+    display: inline;
+    margin-right: 2.5%;
+  }
+  
+  #languageSelector{
+    float: right;
+  }
+}
