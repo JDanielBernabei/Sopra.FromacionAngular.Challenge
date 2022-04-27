@@ -9,31 +9,38 @@ import { DatePipe } from '@angular/common'
 export class ClientHttpService {
 
   baseUrl: string = "https://api.themoviedb.org/";
-  peliculasAPI: string = "3/discover/movie";
-  seriesAPI: string = "3/discover/tv";
-
   apiKey: string = "1e271bc9560db07a62290e00962de546";
-  peliculasDate: string = "primary_release_date.gte";
-  seriesDate: string = "first_air_date.gte";
 
   constructor(private httpClient: HttpClient, public datepipe: DatePipe) { }
 
-  public getElementosPopulares(api: string, dateString: string): Observable<any>{
-    // Cargamos la apikey en los parametros
+  public getPopularMovies(): Observable<any>{
     let queryParams = new HttpParams();
     queryParams = queryParams.append("api_key", this.apiKey);
-
-    // Solo peliculas de los ultimos 3 meses 
     let newDate = new Date();
     newDate.setMonth(newDate.getMonth() - 3);
     let timeInterval = this.datepipe.transform( newDate, 'yyyy-MM-dd');
     if (timeInterval != null){
-      queryParams = queryParams.append(dateString, timeInterval);
+      queryParams = queryParams.append("primary_release_date.gte", timeInterval);
     } else {
       timeInterval = "";
-      queryParams = queryParams.append(dateString, timeInterval);
+      queryParams = queryParams.append("primary_release_date.gte", timeInterval);
     } 
-    return this.httpClient.get<any>(this.baseUrl + api,{params:queryParams});
+    return this.httpClient.get<any>(this.baseUrl + "3/discover/movie",{params:queryParams});
+  }
+
+  public getPopularSeries(): Observable<any>{
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("api_key", this.apiKey);
+    let newDate = new Date();
+    newDate.setMonth(newDate.getMonth() - 3);
+    let timeInterval = this.datepipe.transform( newDate, 'yyyy-MM-dd');
+    if (timeInterval != null){
+      queryParams = queryParams.append("first_air_date.gte", timeInterval);
+    } else {
+      timeInterval = "";
+      queryParams = queryParams.append("first_air_date.gte", timeInterval);
+    } 
+    return this.httpClient.get<any>(this.baseUrl + "3/discover/tv",{params:queryParams});
   }
 
   public getMoviesByQuery(stringBusqueda: string): Observable<any>{
@@ -46,6 +53,8 @@ export class ClientHttpService {
 
   public getShowsByQuery(stringBusqueda: string): Observable<any>{
     let queryParams = new HttpParams();
+    queryParams = queryParams.append("api_key", this.apiKey);
+    queryParams = queryParams.append("query", stringBusqueda);
 
     return this.httpClient.get<any>(this.baseUrl + "3/search/search-tv-shows",{params:queryParams});
   }

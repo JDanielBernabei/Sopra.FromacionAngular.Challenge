@@ -6,13 +6,19 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ResultadosBusquedaService {
-  private searchResultsSource = new Subject<any>();
+  private searchMoviesSource = new Subject<any>();
+  private searchSeriesSource = new Subject<any>();
 
-  searchResults = this.searchResultsSource.asObservable();
+  searchMovies = this.searchMoviesSource.asObservable();
+  searchSeries = this.searchSeriesSource.asObservable();
 
   constructor() { }
 
-  sendSearchResults(message: any) {
-    this.searchResultsSource.next(message);  
+  sendMoviesResults(message: any) {
+    this.searchMoviesSource.next(message);  
+  }
+
+  sendSeriesResults(message: any) {
+    this.searchSeriesSource.next(message);  
   }
 }

@@ -11,8 +11,6 @@ export class ShowMiniatureComponent implements OnInit {
   @Input()
   title: string = '';
   @Input()
-  name: string = '';
-  @Input()
   vote_average: number = 0;
   stars: string = '../../../assets/img/0stars.jpg';  
 
@@ -29,9 +27,3 @@ export class ShowMiniatureComponent implements OnInit {
 
 }
 
-export class apiResponse {
-
-  results: ShowMiniatureComponent[] = []; 
-
-  constructor(){}
-}

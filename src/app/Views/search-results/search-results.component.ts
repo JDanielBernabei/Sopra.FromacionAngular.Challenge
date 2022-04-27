@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-search-results',
@@ -7,25 +6,32 @@ import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busq
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  resultados: any[] = [];
+  
+  queriedMovies: any[] = [];
+  queriedShows: any[] = [];
+  resultadosBusqueda: any[] = [];
 
   constructor(){};
-  //constructor(resultadosBusquedaService: ResultadosBusquedaService) {
-  //  resultadosBusquedaService.searchResults.subscribe(
-  //    (data : any) => {
-  //      this.resultadosBusqueda = data;
-  //      console.log("data" + data);
-  //    }); 
-  //}
+  ngOnInit(): void {};
 
-  @Input() resultadosBusqueda:any;
-  ngOnInit(): void {
-    this.resultados = this.resultadosBusqueda;
-    console.log(this.resultadosBusqueda);
-  }
-  ngDoCheck(){
-    this.resultados = this.resultadosBusqueda;
-    console.log(this.resultadosBusqueda);
+  show(){
+    if (this.queriedMovies.length > this.queriedShows.length){
+      for (let i=0; i<this.queriedShows.length; i+=2){
+        this.resultadosBusqueda[i] = this.queriedMovies[i];
+        this.resultadosBusqueda[i+1] = this.queriedShows[i];
+      }
+      for (let i=this.queriedShows.length; i<this.queriedMovies.length; i++){
+        this.resultadosBusqueda[i] = this.queriedMovies[i];
+      }
+    } else{
+      for (let i=0; i<this.queriedMovies.length; i+=2){
+        this.resultadosBusqueda[i] = this.queriedMovies[i];
+        this.resultadosBusqueda[i+1] = this.queriedShows[i];
+      }
+      for (let i=this.queriedMovies.length; i<this.queriedShows.length; i++){
+        this.resultadosBusqueda[i] = this.queriedShows[i];
+      }
+    }
   }
 
 }

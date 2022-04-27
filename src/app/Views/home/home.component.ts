@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import { ShowMiniatureComponent, apiResponse } from 'src/app/Shared/show-miniature/show-miniature.component';
 import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 
 
@@ -14,89 +13,14 @@ export class HomeComponent implements OnInit {
   
   slides: string [] = ['../../../assets/Patatas/3patatas.jpg','../../../assets/Patatas/muchaspatatas.jpg','../../../assets/Patatas/3patatas.jpg','../../../assets/Patatas/muchaspatatas.jpg'];
   slideIndex=0;
-  captionText : string ="";
   currentSlide : string = "";
+
   peliculasPopulares: any[] = [];
-  seriesPopulares: ShowMiniatureComponent [] = [];
+  seriesPopulares: any [] = [];
 
   queryString: string = "";
-  resultadosBusqueda: any[] = [];
-  queriedMovies: any[] = [];
-  queriedShows: any[] = [];
 
   constructor(private clientHttpService: ClientHttpService, private resultadosBusquedaService: ResultadosBusquedaService) { }
-
-  @Output() emitter:EventEmitter<any[]> = new EventEmitter<any[]>();
-  searchQuery(keyword : string){    
-    this.clientHttpService.getMoviesByQuery(keyword).subscribe(   
-      (data : any) => { 
-        this.queriedMovies = data.results;
-        for (let i=0; i<this.queriedMovies.length; i++){
-          this.resultadosBusqueda[i] = this.queriedMovies[i];
-        }
-        this.emitter.emit(this.resultadosBusqueda);
-        //this.resultadosBusquedaService.sendSearchResults(this.resultadosBusqueda); 
-      },
-      (error) => {
-        console.log("failure");
-      }
-    );
-    
-
-/*    this.clientHttpService.getShowsByQuery(this.queryString).subscribe(
-      (data : any) => {  
-        this.queriedShows = data.results;      
-      },
-      (error) => {
-        console.log("failure");
-      }
-    )
-
-    if (this.queriedMovies.length > this.queriedShows.length){
-      for (let i=0; i<this.queriedShows.length; i+=2){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-        this.resultadosBusqueda[i+1] = this.queriedShows[i];
-      }
-      for (let i=this.queriedShows.length; i<this.queriedMovies.length; i++){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-      }
-    } else{
-      for (let i=0; i<this.queriedMovies.length; i+=2){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-        this.resultadosBusqueda[i+1] = this.queriedShows[i];
-      }
-      for (let i=this.queriedMovies.length; i<this.queriedShows.length; i++){
-        this.resultadosBusqueda[i] = this.queriedShows[i];
-      }
-    }*/
-    
-    //this.resultadosBusquedaService.sendSearchResults(this.resultadosBusqueda);   
-    //window.location.href = 'search';
-  }
-
-  private ElementosPopulares(): void{
-    this.clientHttpService.getElementosPopulares(this.clientHttpService.peliculasAPI, this.clientHttpService.peliculasDate).subscribe(
-      (data : any) => { 
-        this.peliculasPopulares = data.results;
-        this.slides[0] = this.peliculasPopulares[0].poster_path;
-        this.slides[2] = this.peliculasPopulares[1].poster_path; 
-      },
-      (error) => {
-        console.log("failure");
-      }
-    )
-
-    this.clientHttpService.getElementosPopulares(this.clientHttpService.seriesAPI, this.clientHttpService.seriesDate).subscribe(
-      (data : apiResponse) => { 
-        this.seriesPopulares = data.results;
-        this.slides[1] = this.seriesPopulares[0].poster_path;
-        this.slides[3] = this.seriesPopulares[1].poster_path; 
-      },
-      (error) => {
-        console.log("failure");
-      }
-    )
-  }
 
   ngOnInit(): void {
     this.ElementosPopulares();
@@ -104,8 +28,52 @@ export class HomeComponent implements OnInit {
     this.showSlidesAuto();
   }
 
-  getSlide() {
-    this.captionText = this.slideIndex.toString();
+  searchQuery(keyword : string){    
+    this.clientHttpService.getMoviesByQuery(keyword).subscribe(   
+      (data : any) => { 
+        this.resultadosBusquedaService.sendMoviesResults(data.results); 
+      },
+      (error) => {
+        console.log("failure");
+      }
+    );    
+
+    this.clientHttpService.getShowsByQuery(this.queryString).subscribe(
+      (data : any) => {  
+        this.resultadosBusquedaService.sendSeriesResults(data.results);     
+      },
+      (error) => {
+        console.log("failure");
+      }
+    )  
+    window.location.href = 'search';
+  }
+
+  private ElementosPopulares(): void{
+    this.clientHttpService.getPopularMovies().subscribe(
+      (data : any) => { 
+        this.peliculasPopulares = data.results;
+        this.slides[0] = "https://www.themoviedb.org/t/p/original" + this.peliculasPopulares[0].backdrop_path;
+        this.slides[2] = "https://www.themoviedb.org/t/p/original" + this.peliculasPopulares[1].backdrop_path; 
+      },
+      (error) => {
+        console.log("failure");
+      }
+    )
+
+    this.clientHttpService.getPopularSeries().subscribe(
+      (data : any) => { 
+        this.seriesPopulares = data.results;
+        this.slides[1] = "https://www.themoviedb.org/t/p/original" + this.seriesPopulares[0].backdrop_path;
+        this.slides[3] = "https://www.themoviedb.org/t/p/original" + this.seriesPopulares[1].backdrop_path; 
+      },
+      (error) => {
+        console.log("failure");
+      }
+    )
+  }
+
+  getSlide() {    
     return this.slides[this.slideIndex];
   }
 
@@ -117,8 +85,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.slideIndex += n;
     }
-    
-    this.captionText = this.slideIndex.toString();
   }
 
   showSlide(n: number) {
@@ -131,4 +97,7 @@ export class HomeComponent implements OnInit {
       this.showSlidesAuto();
     }, 5000);
   }
+
+  
+
 }
