@@ -1,13 +1,9 @@
-* {box-sizing:border-box}
-
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
-
-
 
 /* Next & previous buttons */
 .prev, .next {
@@ -56,6 +52,12 @@
   top: 0;
 }
 
+#searchBar{
+  position: absolute;
+  top: 20px;
+  right: 10%;
+}
+
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
@@ -82,3 +84,17 @@
   from {opacity: .4}
   to {opacity: 1}
 }
+
+.inline{
+  display: inline-block;
+}
+.verMas{
+  float: right;
+}
+.novedadesContent{
+  column-count: 5;
+}
+// Nº columnas movil y escritorio
+// inline de divs
+// tamaño poster/estrellas
+// formato del titulo

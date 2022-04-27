@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'search', component: SearchResultsComponent },
   { path: 'movies', component: SearchResultsComponent },
   { path: 'series', component: SearchResultsComponent },
-  { path: 'show', component: DetailComponent },
+  { path: 'showDetail', component: DetailComponent },
   { path: 'myList', component: SearchResultsComponent },
   { path: 'myProfile', component: SearchResultsComponent },
   { path: '', component: HomeComponent }

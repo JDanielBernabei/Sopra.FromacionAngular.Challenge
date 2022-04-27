@@ -1,1 +1,9 @@
-<img src="../../../assets/Patatas/muchaspatatas.jpg">
+<div >
+    <h2 class="inline">Resultados Búsqueda</h2>
+    <br>
+    <div class ="queryContent">
+      <div *ngFor="let resultadoBusqueda of resultadosBusqueda">
+        <app-show-miniature [poster_path]=resultadoBusqueda.poster_path [title]=resultadoBusqueda.title [vote_average]=resultadoBusqueda.vote_average ></app-show-miniature>
+      </div> 
+    </div>   
+</div>
