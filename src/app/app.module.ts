@@ -12,6 +12,7 @@ import { HomeComponent } from './Views/home/home.component';
 import { DetailComponent } from './Views/detail/detail.component';
 import { SearchResultsComponent } from './Views/search-results/search-results.component';
 import { ShowMiniatureComponent } from './Shared/show-miniature/show-miniature.component';
+import { BarraBusquedaComponent } from './Shared/barra-busqueda/barra-busqueda.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ShowMiniatureComponent } from './Shared/show-miniature/show-miniature.c
     HomeComponent,
     DetailComponent,
     SearchResultsComponent,
-    ShowMiniatureComponent
+    ShowMiniatureComponent,
+    BarraBusquedaComponent
   ],
   imports: [
     BrowserModule,

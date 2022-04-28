@@ -1,9 +1,11 @@
 <div >
-    <h2 class="inline">Resultados Búsqueda</h2>
+    <app-barra-busqueda id="searchBar"></app-barra-busqueda>
+    <h2>{{pageTitle}}</h2>
     <br>
     <div class ="queryContent">
-      <div *ngFor="let resultadoBusqueda of resultadosBusqueda">
-        <app-show-miniature [poster_path]=resultadoBusqueda.poster_path [title]=resultadoBusqueda.title [vote_average]=resultadoBusqueda.vote_average ></app-show-miniature>
+      <div *ngFor="let resultadoBusqueda of resultadosBusqueda" class="inline">
+        <app-show-miniature  [poster_path]=resultadoBusqueda.poster_path [title]="resultadoBusqueda.title || resultadoBusqueda.name" [vote_average]=resultadoBusqueda.vote_average ></app-show-miniature>
       </div> 
+      <p *ngIf="resultadosBusqueda.length == 0">No hay registros para los criterios seleccionados</p>
     </div>   
 </div>

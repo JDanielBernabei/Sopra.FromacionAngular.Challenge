@@ -56,7 +56,7 @@ export class ClientHttpService {
     queryParams = queryParams.append("api_key", this.apiKey);
     queryParams = queryParams.append("query", stringBusqueda);
 
-    return this.httpClient.get<any>(this.baseUrl + "3/search/search-tv-shows",{params:queryParams});
+    return this.httpClient.get<any>(this.baseUrl + "3/search/tv",{params:queryParams});
   }
 
   public Detalle(){

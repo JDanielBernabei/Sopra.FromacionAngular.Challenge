@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, AsyncSubject, ReplaySubject, Subject } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResultadosBusquedaService {
-  private searchMoviesSource = new Subject<any>();
-  private searchSeriesSource = new Subject<any>();
+  private searchMoviesSource = new BehaviorSubject<any>([]);
+  private searchSeriesSource = new BehaviorSubject<any[]>([]);
 
   searchMovies = this.searchMoviesSource.asObservable();
   searchSeries = this.searchSeriesSource.asObservable();
 
-  constructor() { }
+  constructor() { }  
 
-  sendMoviesResults(message: any) {
-    this.searchMoviesSource.next(message);  
+  sendMoviesResults(message: any) { 
+    this.searchMoviesSource.next(message);
   }
-
-  sendSeriesResults(message: any) {
+  sendSeriesResults(message: any[]) {
     this.searchSeriesSource.next(message);  
-  }
+  }  
 }

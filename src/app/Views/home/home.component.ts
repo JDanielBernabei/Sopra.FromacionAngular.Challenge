@@ -1,13 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
-
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  providers: [ResultadosBusquedaService]
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   
@@ -17,10 +14,8 @@ export class HomeComponent implements OnInit {
 
   peliculasPopulares: any[] = [];
   seriesPopulares: any [] = [];
-
-  queryString: string = "";
-
-  constructor(private clientHttpService: ClientHttpService, private resultadosBusquedaService: ResultadosBusquedaService) { }
+  
+  constructor(private clientHttpService: ClientHttpService) { }
 
   ngOnInit(): void {
     this.ElementosPopulares();
@@ -28,26 +23,6 @@ export class HomeComponent implements OnInit {
     this.showSlidesAuto();
   }
 
-  searchQuery(keyword : string){    
-    this.clientHttpService.getMoviesByQuery(keyword).subscribe(   
-      (data : any) => { 
-        this.resultadosBusquedaService.sendMoviesResults(data.results); 
-      },
-      (error) => {
-        console.log("failure");
-      }
-    );    
-
-    this.clientHttpService.getShowsByQuery(this.queryString).subscribe(
-      (data : any) => {  
-        this.resultadosBusquedaService.sendSeriesResults(data.results);     
-      },
-      (error) => {
-        console.log("failure");
-      }
-    )  
-    window.location.href = 'search';
-  }
 
   private ElementosPopulares(): void{
     this.clientHttpService.getPopularMovies().subscribe(
@@ -97,7 +72,4 @@ export class HomeComponent implements OnInit {
       this.showSlidesAuto();
     }, 5000);
   }
-
-  
-
 }

@@ -1,9 +1,6 @@
 <!-- Slideshow container -->
 <div class="slideshow-container">
-  <!-- Barra de busqueda -->
-  <div id="searchBar">    
-    <input (keyup.enter)="searchQuery(keyword.value)" #keyword type="text" placeholder="Search.." [(ngModel)]="queryString" back>
-  </div>  
+  <app-barra-busqueda id="searchBar"></app-barra-busqueda>
   <!-- Full-width images with number and caption text -->
   <div class="mySlides fade">
     <img src={{getSlide()}} style="width:100%">

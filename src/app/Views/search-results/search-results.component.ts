@@ -1,4 +1,6 @@
+import { compileClassMetadata } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 
 @Component({
   selector: 'app-search-results',
@@ -6,32 +8,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  
+  pageTitle = "Resultados Búsqueda";
+
   queriedMovies: any[] = [];
   queriedShows: any[] = [];
   resultadosBusqueda: any[] = [];
 
-  constructor(){};
-  ngOnInit(): void {};
+  constructor(private resultadosBusquedaService: ResultadosBusquedaService){};
 
-  show(){
-    if (this.queriedMovies.length > this.queriedShows.length){
-      for (let i=0; i<this.queriedShows.length; i+=2){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-        this.resultadosBusqueda[i+1] = this.queriedShows[i];
-      }
-      for (let i=this.queriedShows.length; i<this.queriedMovies.length; i++){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-      }
-    } else{
-      for (let i=0; i<this.queriedMovies.length; i+=2){
-        this.resultadosBusqueda[i] = this.queriedMovies[i];
-        this.resultadosBusqueda[i+1] = this.queriedShows[i];
-      }
-      for (let i=this.queriedMovies.length; i<this.queriedShows.length; i++){
-        this.resultadosBusqueda[i] = this.queriedShows[i];
-      }
-    }
+  ngOnInit(): void {
+    this.searchResults();
+  };
+
+  private  searchResults():void{
+    this.resultadosBusquedaService.searchMovies.subscribe(
+      (data: any) => {
+        this.queriedMovies = data;       
+        
+        this.resultadosBusquedaService.searchSeries.subscribe(
+          (data: any) => {
+            this.queriedShows = data;  
+
+            let tempArray: any[] = [];
+            for (var i=0, j=0, k=0; i < this.queriedMovies.length || j < this.queriedShows.length;) {
+              if (i < this.queriedMovies.length) {
+                tempArray.push(this.queriedMovies[i++]);
+              }
+              if (j < this.queriedShows.length) {
+                tempArray.push(this.queriedShows[j++]);
+              }
+            }
+            this.resultadosBusqueda = tempArray;
+        });
+    });    
   }
-
 }
