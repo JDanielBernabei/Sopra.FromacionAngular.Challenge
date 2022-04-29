@@ -7,9 +7,11 @@ import { DetailComponent } from './Views/detail/detail.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'search', component: SearchResultsComponent },
+  { path: 'search/:searchQuery', component: SearchResultsComponent },
   { path: 'movies', component: SearchResultsComponent },
   { path: 'series', component: SearchResultsComponent },
-  { path: 'showDetail', component: DetailComponent },
+  { path: 'showDetail/movie/:id', component: DetailComponent },
+  { path: 'showDetail/serie/:id', component: DetailComponent },
   { path: 'myList', component: SearchResultsComponent },
   { path: 'myProfile', component: SearchResultsComponent },
   { path: '', component: HomeComponent }

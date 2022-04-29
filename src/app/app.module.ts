@@ -6,13 +6,14 @@ import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ShowMiniatureComponent } from './Shared/show-miniature/show-miniature.component';
+import { BarraBusquedaComponent } from './Shared/barra-busqueda/barra-busqueda.component';
 import { HeaderComponent } from './Shared/header/header.component';
 import { FooterComponent } from './Shared/footer/footer.component';
 import { HomeComponent } from './Views/home/home.component';
-import { DetailComponent } from './Views/detail/detail.component';
 import { SearchResultsComponent } from './Views/search-results/search-results.component';
-import { ShowMiniatureComponent } from './Shared/show-miniature/show-miniature.component';
-import { BarraBusquedaComponent } from './Shared/barra-busqueda/barra-busqueda.component';
+import { DetailComponent } from './Views/detail/detail.component';
+
 
 @NgModule({
   declarations: [

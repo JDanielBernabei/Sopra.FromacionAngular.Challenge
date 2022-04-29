@@ -1,1 +1,47 @@
-<img src="../../../assets/Patatas/patata.jpg">
+<div >
+    <img src={{element.backdrop_path}} style="width:100%">
+</div>
+<div>
+  <div>
+    <p ><b>{{element.title || element.name}}</b></p>
+    <p>{{element.release_date}} | {{element.runtime}} mins | PG</p>
+  </div>
+  <div>
+    <span><b>Puntuacion</b></span>
+    <img src={{getStarsPath()}}  height="20">
+  </div>
+</div>  
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <td><b>Director</b></td>
+        <td><b>País</b></td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{director}}</td>
+        <td>{{element.production_countries[0]}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <div *ngFor="let genre of element.genres">
+      <button>{{genre}}</button>
+    </div>
+  </div>
+
+  <div>
+    <h2>Sinopsis</h2>
+    <p>{{element.overview}}</p>
+  </div>
+  <button><img>Visualizar</button>
+  <button><img>Descarga</button>
+
+  <div>
+    <h2>Reparto</h2>
+    <div>Carrousel de cast</div>
+  </div>
+</div>

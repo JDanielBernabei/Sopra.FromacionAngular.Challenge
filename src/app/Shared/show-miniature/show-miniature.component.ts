@@ -7,12 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ShowMiniatureComponent implements OnInit {
   @Input()
-  poster_path: string = '';
+  poster_path?: string = '';
   @Input()
   title: string = '';
   @Input()
   vote_average: number = 0;
   stars: string = '../../../assets/img/0stars.jpg';  
+  @Input()
+  id: number = 0;
+  @Input()
+  media: string = '';
 
   constructor(){}
 
