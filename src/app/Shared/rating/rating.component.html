@@ -1,1 +1,23 @@
-<p>rating works!</p>
+<div class="rating" (mouseenter)="isHover = true" (mouseleave)="isHover = false" (click)="ToggleModal()">
+    <div *ngIf="isShown">
+        <img src="../../../assets/Patatas/muchaspatatas.jpg">
+    </div>
+
+    <img *ngIf="!isHover" src={{stars}} >
+
+    <div (mouseenter)="star[4] = 'fullStar'" (mouseleave)="star[4] = 'emptyStar'">
+        <img *ngIf="isHover" src="../../../assets/img/{{star[4]}}.jpg">
+        <div (mouseenter)="star[3] = 'fullStar'" (mouseleave)="star[3] = 'emptyStar'">
+            <img *ngIf="isHover" src="../../../assets/img/{{star[3]}}.jpg">
+            <div (mouseenter)="star[2] = 'fullStar'" (mouseleave)="star[2] = 'emptyStar'">
+                <img *ngIf="isHover" src="../../../assets/img/{{star[2]}}.jpg">
+                <div (mouseenter)="star[1] = 'fullStar'" (mouseleave)="star[1] = 'emptyStar'">
+                    <img *ngIf="isHover" src="../../../assets/img/{{star[1]}}.jpg">
+                    <div (mouseenter)="star[0] = 'fullStar'" (mouseleave)="star[0] = 'emptyStar'">
+                        <img *ngIf="isHover" src="../../../assets/img/{{star[0]}}.jpg">
+                    </div>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>

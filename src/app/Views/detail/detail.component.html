@@ -8,7 +8,9 @@
   </div>
   <div>
     <span><b>Puntuacion</b></span>
-    <img src={{stars}}  height="20">
+    {{vote_average}}
+    <!-- <img src={{stars}}  height="20"> -->
+    <app-rating [vote_average]=vote_average></app-rating> 
   </div>
 </div>  
 

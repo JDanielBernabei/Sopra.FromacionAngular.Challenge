@@ -17,7 +17,7 @@ export class DetailComponent implements OnInit {
   title: string = '';
   release_date: string = '';
   runtime: string = '';
-  stars: string = '../../../assets/img/0stars.jpg';
+  vote_average: number = 0;
   production_countries: production_countries[] = [];
   genres: genre[] = [];
   overview: string = '';
@@ -77,7 +77,7 @@ export class DetailComponent implements OnInit {
         this.element.overview != null? this.overview = this.element.overview :  this.overview =  "";
         this.runtime = this.element.runtime;
         this.production_countries = this.element.production_countries;
-        this.stars = '../../../assets/img/' + Math.floor(this.element.vote_average/2) + 'stars.jpg';
+        this.vote_average = this.element.vote_average;        
         this.title = this.element.title;
         this.release_date = this.element.release_date;
       },
@@ -101,7 +101,7 @@ export class DetailComponent implements OnInit {
         this.element.overview != null? this.overview = this.element.overview :  this.overview =  "";
         this.element.episode_run_time[0] != null? this.runtime = this.element.episode_run_time[0].toString() : this.runtime = '?';
         this.production_countries = this.element.production_countries;
-        this.stars = '../../../assets/img/' + Math.floor(this.element.vote_average/2) + 'stars.jpg';
+        this.vote_average = this.element.vote_average; 
         this.title = this.element.name;
         this.release_date = this.element.first_air_date;
       },
