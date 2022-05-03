@@ -1,16 +1,21 @@
 <div >
-    <img src={{element.backdrop_path}} style="width:100%">
+    <img src={{backdrop_path}} style="width:100%">
 </div>
 <div>
   <div>
-    <p ><b>{{element.title || element.name}}</b></p>
-    <p>{{element.release_date}} | {{element.runtime}} mins | PG</p>
+    <p ><b>{{title}}</b></p>
+    <p>{{release_date}} | {{runtime}} mins | PG</p>
   </div>
   <div>
     <span><b>Puntuacion</b></span>
-    <img src={{getStarsPath()}}  height="20">
+    <img src={{stars}}  height="20">
   </div>
 </div>  
+
+<div>
+  <button *ngIf="!inFavourites()" (click)="addFavourite(element)" >Añadir a Favoritos</button>
+  <button *ngIf="inFavourites()">Añadido a Favoritos</button>
+</div>
 
 <div>
   <table>
@@ -22,20 +27,20 @@
     </thead>
     <tbody>
       <tr>
-        <td>{{director}}</td>
-        <td>{{element.production_countries[0]}}</td>
+        <td>{{director.name}}</td>
+        <td>{{production_countries[0].iso_3166_1}}</td>
       </tr>
     </tbody>
   </table>
   <div>
-    <div *ngFor="let genre of element.genres">
-      <button>{{genre}}</button>
+    <div *ngFor="let genre of genres">
+      <button>{{genre.name}}</button>
     </div>
   </div>
 
   <div>
     <h2>Sinopsis</h2>
-    <p>{{element.overview}}</p>
+    <p>{{overview}}</p>
   </div>
   <button><img>Visualizar</button>
   <button><img>Descarga</button>

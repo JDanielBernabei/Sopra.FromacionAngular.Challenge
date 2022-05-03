@@ -13,6 +13,7 @@ import { FooterComponent } from './Shared/footer/footer.component';
 import { HomeComponent } from './Views/home/home.component';
 import { SearchResultsComponent } from './Views/search-results/search-results.component';
 import { DetailComponent } from './Views/detail/detail.component';
+import { RatingComponent } from './Shared/rating/rating.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DetailComponent } from './Views/detail/detail.component';
     DetailComponent,
     SearchResultsComponent,
     ShowMiniatureComponent,
-    BarraBusquedaComponent
+    BarraBusquedaComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,

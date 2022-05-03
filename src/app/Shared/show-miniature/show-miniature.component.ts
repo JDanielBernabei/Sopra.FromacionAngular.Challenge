@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DiscoverMoviesList, DiscoverSeriesList } from '../Models/DiscoverAPIs';
+import { SearchMoviesList, SearchSeriesList } from '../Models/SearchAPIs';
 
 @Component({
   selector: 'app-show-miniature',
@@ -6,28 +8,32 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./show-miniature.component.scss']
 })
 export class ShowMiniatureComponent implements OnInit {
+
   @Input()
+  show: DiscoverMoviesList | DiscoverSeriesList | SearchMoviesList | SearchSeriesList = {} as DiscoverMoviesList;
+
   poster_path?: string = '';
-  @Input()
   title: string = '';
-  @Input()
   vote_average: number = 0;
   stars: string = '../../../assets/img/0stars.jpg';  
-  @Input()
   id: number = 0;
-  @Input()
   media: string = '';
 
   constructor(){}
 
   ngOnInit(): void {   
-    this.poster_path = "https://www.themoviedb.org/t/p/original"+this.poster_path;
-    this.starsImage(this.vote_average);
-  }
 
-  starsImage(average: number){
-    this.stars = '../../../assets/img/' + Math.floor(average/2) + 'stars.jpg';
+    this.poster_path = "https://www.themoviedb.org/t/p/original" + this.show.poster_path;
+    this.stars = '../../../assets/img/' + Math.floor(this.show.vote_average/2) + 'stars.jpg';
+    if ("title" in this.show) {
+      this.title = this.show.title;
+      this.media = "movie";
+    } else {
+      this.title = this.show.name;
+      this.media = "serie";
+    }
+    this.vote_average = this.show.vote_average;
+    this.id = this.show.id;    
   }
-
 }
 

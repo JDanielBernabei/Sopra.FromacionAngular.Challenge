@@ -4,7 +4,7 @@
     <br>
     <div class ="queryContent">
       <div *ngFor="let resultadoBusqueda of resultadosBusqueda" class="inline">
-        <app-show-miniature  [poster_path]=resultadoBusqueda.poster_path [title]=[ngClass]="[resultadoBusqueda.title | resultadoBusqueda.name]" [vote_average]=resultadoBusqueda.vote_average [id]=resultadoBusqueda.id></app-show-miniature>
+        <app-show-miniature  [show]=resultadoBusqueda ></app-show-miniature>
       </div> 
       <p *ngIf="resultadosBusqueda.length == 0">No hay registros para los criterios seleccionados</p>
     </div>   

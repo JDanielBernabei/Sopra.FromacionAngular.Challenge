@@ -39,7 +39,7 @@
   <br>
   <div class ="novedadesContent">
     <div *ngFor="let pelicula of peliculasPopulares | slice : 2:7 ">
-      <app-show-miniature [poster_path]=pelicula.poster_path [vote_average]=pelicula.vote_average [title]=pelicula.title [id]=pelicula.id ></app-show-miniature>
+      <app-show-miniature [show]=pelicula></app-show-miniature>
     </div> 
   </div>
    
@@ -55,7 +55,7 @@
   </nav>
   <div class ="novedadesContent">
     <div *ngFor="let serie of seriesPopulares | slice : 2:7 ">    
-      <app-show-miniature [poster_path]=serie.poster_path [vote_average]=serie.vote_average [title]=serie.name [id]=serie.id></app-show-miniature>
+      <app-show-miniature [show]=serie></app-show-miniature>
     </div>    
   </div>    
 </div>
