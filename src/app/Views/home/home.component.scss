@@ -1,11 +1,22 @@
-/* Slideshow container */
-.slideshow-container {
-  max-width: 1000px;
-  position: relative;
-  margin: auto;
+app-barra-busqueda{
+  position: absolute;
+  top: 20px;
+  right: 10%;
 }
 
-/* Next & previous buttons */
+.slideshow-container {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+}
+
+#slideImg{
+  width: 800px;
+  object-fit: cover;
+  position: relative;
+  left: -50%;
+}
+
 .prev, .next {
   cursor: pointer;
   position: absolute;
@@ -21,35 +32,39 @@
   user-select: none;
 }
 
-/* Position the "next button" to the right */
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
-/* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }
 
-/* Caption text */
-.text {
+#slideInfo{
   color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
   position: absolute;
   bottom: 8px;
-  width: 100%;
-  text-align: center;
+  left: 0px;
+  right: 0px;
+  width: 90%;
+  margin: auto;
+  padding-bottom: 20px;
 }
 
-#searchBar{
-  position: absolute;
-  top: 20px;
-  right: 10%;
+#slideTitle{
+  float:left;
 }
 
-/* The dots/bullets/indicators */
+#ratingSlide{
+  float: right;
+}
+
+#rating{
+  display: flex;
+  justify-content: right;
+}
+
 .dot {
   cursor: pointer;
   height: 15px;
@@ -65,7 +80,6 @@
   background-color: #717171;
 }
 
-/* Fading animation */
 .fade {
   animation-name: fade;
   animation-duration: 1.5s;
@@ -76,16 +90,28 @@
   to {opacity: 1}
 }
 
-.inline{
-  display: inline-block;
+#restoNovedades{
+  width: 90%;
+  margin-left: 5%;
 }
+
+.inline{
+  display: inline;
+}
+
 .verMas{
   float: right;
 }
+
 .novedadesContent{
   column-count: 5;
 }
-// Nº columnas movil y escritorio
-// inline de divs
-// tamaño poster/estrellas
-// formato del titulo
+
+@media only screen and (min-width: 601px) {
+  #slideImg{
+    width: 100%;
+    object-fit:unset;
+    position: unset;    
+    left: unset;
+  }
+}

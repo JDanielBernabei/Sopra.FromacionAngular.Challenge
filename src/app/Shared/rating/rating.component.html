@@ -2,19 +2,19 @@
     <div *ngIf="isShown">
         <img src="../../../assets/Patatas/muchaspatatas.jpg">
     </div>
+    
+    <img *ngIf="!isHover" src={{stars}} alt="Rating Global">
 
-    <img *ngIf="!isHover" src={{stars}} >
-
-    <div (mouseenter)="star[4] = 'fullStar'" (mouseleave)="star[4] = 'emptyStar'">
-        <img *ngIf="isHover" src="../../../assets/img/{{star[4]}}.jpg">
-        <div (mouseenter)="star[3] = 'fullStar'" (mouseleave)="star[3] = 'emptyStar'">
-            <img *ngIf="isHover" src="../../../assets/img/{{star[3]}}.jpg">
-            <div (mouseenter)="star[2] = 'fullStar'" (mouseleave)="star[2] = 'emptyStar'">
-                <img *ngIf="isHover" src="../../../assets/img/{{star[2]}}.jpg">
-                <div (mouseenter)="star[1] = 'fullStar'" (mouseleave)="star[1] = 'emptyStar'">
-                    <img *ngIf="isHover" src="../../../assets/img/{{star[1]}}.jpg">
-                    <div (mouseenter)="star[0] = 'fullStar'" (mouseleave)="star[0] = 'emptyStar'">
-                        <img *ngIf="isHover" src="../../../assets/img/{{star[0]}}.jpg">
+    <div  class="inline"(mouseenter)="star[4] = 'fullStar'" (mouseleave)="star[4] = 'emptyStar'">
+        <img *ngIf="isHover" src="../../../assets/img/{{star[4]}}.png" alt="Star">
+        <div class="inline"(mouseenter)="star[3] = 'fullStar'" (mouseleave)="star[3] = 'emptyStar'">
+            <img *ngIf="isHover" src="../../../assets/img/{{star[3]}}.png" alt="Star">
+            <div class="inline"(mouseenter)="star[2] = 'fullStar'" (mouseleave)="star[2] = 'emptyStar'">
+                <img *ngIf="isHover" src="../../../assets/img/{{star[2]}}.png" alt="Star">
+                <div class="inline"(mouseenter)="star[1] = 'fullStar'" (mouseleave)="star[1] = 'emptyStar'">
+                    <img *ngIf="isHover" src="../../../assets/img/{{star[1]}}.png" alt="Star">
+                    <div class="inline"(mouseenter)="star[0] = 'fullStar'" (mouseleave)="star[0] = 'emptyStar'">
+                        <img *ngIf="isHover" src="../../../assets/img/{{star[0]}}.png" alt="Star">
                     </div>
                 </div>
             </div>            

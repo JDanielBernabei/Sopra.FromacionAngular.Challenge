@@ -1,16 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DetailsMovieApiResponse, CreditsApiResponse, DetailsSeriesApiResponse, cast, genre, production_countries } from 'src/app/Shared/Models/DetailsAPIs';
-import { SearchMoviesList, SearchSeriesList } from 'src/app/Shared/Models/SearchAPIs';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import { FavouritesService } from 'src/app/Shared/Services/favourites.service';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent {
   element: DetailsMovieApiResponse | DetailsSeriesApiResponse = {} as DetailsMovieApiResponse;
 
   backdrop_path: string = '';
@@ -25,7 +23,7 @@ export class DetailComponent implements OnInit {
   credits: cast[] = [];
   director: cast = {} as cast;
 
-  constructor(private router: Router, private clientHttpService: ClientHttpService, private Activatedroute:ActivatedRoute, private favourites: FavouritesService) { }
+  constructor(private router: Router, private clientHttpService: ClientHttpService, private Activatedroute:ActivatedRoute) { }
 
   ngOnInit(): void {
     let queryString=this.Activatedroute.snapshot.paramMap.get("id");

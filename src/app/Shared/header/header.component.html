@@ -1,11 +1,7 @@
 <div id = "header">
-    <div>
-        <button class="openModal" (click)="ToggleModal()"><img src="../../../assets/img/BurgerMenu.png"></button>
-    </div>
+    <button id="menu" (click)="ToggleModal()" aria-label="open nav menu"><img id="menuIcon" src="../../../assets/img/burgerMenu.png" alt="open nav menu"></button>
     <div class="modal" *ngIf="isShown">
-        <div>
-            <button id="closeModalDesktop" class="closeModal" (click)="ToggleModal()"><img src="../../../assets/img/Cerrar.PNG" height="70"></button>
-        </div>
+        <button id="closeModalDesktop" class="closeModal" (click)="ToggleModal()" aria-label="close nav menu"><img src="../../../assets/img/cerrar.png" alt="close nav menu"></button>
         <div class="modalContent">
             <nav>
                 <a routerLink="" (click)="ToggleModal()">Inicio</a>
@@ -20,9 +16,9 @@
                 <br>
                 <a routerLink="/myProfile" (click)="ToggleModal()">Mi perfil</a>
             </nav>
-            <div>
-                <button id="closeModalMobile" (click)="ToggleModal()"><img src="../../../assets/img/Cerrar.PNG" height="70"></button>
-            </div>
+            <br>
+            <br>
+            <button id="closeModalMobile" (click)="ToggleModal()" aria-label="close nav menu"><img src="../../../assets/img/cerrar.png" alt="close nav menu"></button>
         </div>
       </div>
             

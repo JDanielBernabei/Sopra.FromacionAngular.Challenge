@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router} from '@angular/router';
 import { DiscoverMoviesApiResponse, DiscoverMoviesList, DiscoverSeriesApiResponse, DiscoverSeriesList } from 'src/app/Shared/Models/DiscoverAPIs';
 import { SearchMoviesList, SearchSeriesList } from 'src/app/Shared/Models/SearchAPIs';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import { FavouritesService } from 'src/app/Shared/Services/favourites.service';
 import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 
 @Component({
@@ -11,14 +10,14 @@ import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busq
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.scss']
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent {
   pageTitle = "";
 
   queriedMovies: (DiscoverMoviesList | SearchMoviesList)[] = [];      // 
   queriedShows: (DiscoverSeriesList | SearchSeriesList)[] = [];       // CAMBIAR DE LISTA A APIRESPONSE PARA HACER LA PAGINACION
   resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];   // 
 
-  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private clientHttpService: ClientHttpService, private favourites: FavouritesService){};
+  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private clientHttpService: ClientHttpService){};
 
   ngOnInit(): void {
     if (this.router.url.includes("/movies")){

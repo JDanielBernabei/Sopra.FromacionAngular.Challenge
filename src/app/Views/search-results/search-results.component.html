@@ -1,9 +1,9 @@
-<div >
-    <app-barra-busqueda id="searchBar"></app-barra-busqueda>
+<div id="searchResults">
+    <app-barra-busqueda></app-barra-busqueda>
     <h2>{{pageTitle}}</h2>
     <br>
-    <div class ="queryContent">
-      <div *ngFor="let resultadoBusqueda of resultadosBusqueda" class="inline">
+    <div>
+      <div class="show" *ngFor="let resultadoBusqueda of resultadosBusqueda">
         <app-show-miniature  [show]=resultadoBusqueda ></app-show-miniature>
       </div> 
       <p *ngIf="resultadosBusqueda.length == 0">No hay registros para los criterios seleccionados</p>

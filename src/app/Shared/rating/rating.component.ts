@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-rating',
@@ -10,7 +10,7 @@ export class RatingComponent {
   vote_average: number = 0;
 
   isHover: boolean = false;
-  stars: string = '../../../assets/img/0stars.jpg';
+  stars: string = '../../../assets/img/0stars.png';
 
   star:string[] = ['emptyStar', 'emptyStar', 'emptyStar', 'emptyStar', 'emptyStar'];
 
@@ -19,7 +19,7 @@ export class RatingComponent {
   constructor() { }
 
   ngOnChanges(): void{
-    this.stars = '../../../assets/img/' + Math.floor(this.vote_average/2) + 'stars.jpg';
+    this.stars = '../../../assets/img/' + Math.floor(this.vote_average/2) + 'stars.png';
   }
 
   ToggleModal(this: any) {  

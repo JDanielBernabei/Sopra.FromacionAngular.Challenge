@@ -1,8 +1,16 @@
-.inline{
-    display: inline-block;
+#searchResults{
+  width: 90%;
+  margin-left: 5%;
 }
-#searchBar{
+
+app-barra-busqueda{
   position: relative;
   top: 20px;
   left: 80%;
+}
+
+.show{
+  display: inline-block;
+  width: 18%;
+  margin: 1%;
 }

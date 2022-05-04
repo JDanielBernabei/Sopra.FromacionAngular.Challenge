@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DiscoverMoviesList, DiscoverSeriesList } from '../Models/DiscoverAPIs';
 import { SearchMoviesList, SearchSeriesList } from '../Models/SearchAPIs';
 
@@ -7,7 +7,7 @@ import { SearchMoviesList, SearchSeriesList } from '../Models/SearchAPIs';
   templateUrl: './show-miniature.component.html',
   styleUrls: ['./show-miniature.component.scss']
 })
-export class ShowMiniatureComponent implements OnInit {
+export class ShowMiniatureComponent {
 
   @Input()
   show: DiscoverMoviesList | DiscoverSeriesList | SearchMoviesList | SearchSeriesList = {} as DiscoverMoviesList;
@@ -22,7 +22,6 @@ export class ShowMiniatureComponent implements OnInit {
   constructor(){}
 
   ngOnInit(): void {   
-
     this.poster_path = "https://www.themoviedb.org/t/p/original" + this.show.poster_path;
     this.stars = '../../../assets/img/' + Math.floor(this.show.vote_average/2) + 'stars.jpg';
     if ("title" in this.show) {

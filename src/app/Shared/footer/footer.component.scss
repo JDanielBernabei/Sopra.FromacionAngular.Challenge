@@ -2,6 +2,7 @@
 #footer {
   display: none;
 }
+
 @media only screen and (min-width: 601px) {
   #footer {
     display: block;
@@ -23,19 +24,19 @@
   
   #footerLogo{
     display: inline;
+    height: 40px;
   }
   
   #externalLinks{
+    width: 60%;
+    display: flex;
     float: right;
-    width: 40%;
+    align-items: center;
+    justify-content: right;
   }
   
-  .redSocialLogo{
-    display: inline;
+  .redesSociales{
+    height: 40px;
     margin-right: 2.5%;
-  }
-  
-  #languageSelector{
-    float: right;
-  }
+  }  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component} from '@angular/core';
 import { DiscoverSeriesApiResponse, DiscoverMoviesList, DiscoverMoviesApiResponse, DiscoverSeriesList } from 'src/app/Shared/Models/DiscoverAPIs';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
 
@@ -7,11 +7,9 @@ import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
-  
-  slides: string [] = ['../../../assets/Patatas/3patatas.jpg','../../../assets/Patatas/muchaspatatas.jpg','../../../assets/Patatas/3patatas.jpg','../../../assets/Patatas/muchaspatatas.jpg'];
-  slideIndex=0;
-  currentSlide : string = "";
+export class HomeComponent {  
+  slides: any[] = [];
+  slideIndex = 0;
 
   peliculasPopulares = {} as DiscoverMoviesList[];
   seriesPopulares = {} as DiscoverSeriesList[];
@@ -24,12 +22,17 @@ export class HomeComponent implements OnInit {
     this.showSlidesAuto();
   }
 
+  getMedia(): string{
+    if(this.slideIndex == 0 || this.slideIndex == 2) return "movie";
+    else return "serie";
+  }
+
   private ElementosPopulares(): void{
     this.clientHttpService.getPopularMovies().subscribe({
       next: (data : DiscoverMoviesApiResponse) => { 
         this.peliculasPopulares = data.results;
-        this.slides[0] = "https://www.themoviedb.org/t/p/original" + this.peliculasPopulares[0].backdrop_path;
-        this.slides[2] = "https://www.themoviedb.org/t/p/original" + this.peliculasPopulares[1].backdrop_path; 
+        this.slides[0] = this.peliculasPopulares[0];
+        this.slides[2] = this.peliculasPopulares[1];
       },
       error: () => {console.log("failure");}
     });
@@ -37,15 +40,15 @@ export class HomeComponent implements OnInit {
     this.clientHttpService.getPopularSeries().subscribe({
       next: (data : DiscoverSeriesApiResponse) => { 
         this.seriesPopulares = data.results;
-        this.slides[1] = "https://www.themoviedb.org/t/p/original" + this.seriesPopulares[0].backdrop_path;
-        this.slides[3] = "https://www.themoviedb.org/t/p/original" + this.seriesPopulares[1].backdrop_path; 
+        this.slides[1] = this.seriesPopulares[0];
+        this.slides[3] = this.seriesPopulares[1];
       },
       error: () => {console.log("failure");}
     });
   }
 
-  getSlide() {    
-    return this.slides[this.slideIndex];
+  getSlideBackdrop() {    
+    return "https://www.themoviedb.org/t/p/original" + this.slides[this.slideIndex].backdrop_path;
   }
 
   plusSlides(n: number) {    

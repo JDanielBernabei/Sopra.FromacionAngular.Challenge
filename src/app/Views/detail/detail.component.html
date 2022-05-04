@@ -1,54 +1,64 @@
-<div >
-    <img src={{backdrop_path}} style="width:100%">
-</div>
-<div>
-  <div>
-    <p ><b>{{title}}</b></p>
-    <p>{{release_date}} | {{runtime}} mins | PG</p>
-  </div>
-  <div>
-    <span><b>Puntuacion</b></span>
-    {{vote_average}}
-    <!-- <img src={{stars}}  height="20"> -->
-    <app-rating [vote_average]=vote_average></app-rating> 
-  </div>
-</div>  
-
-<div>
-  <button *ngIf="!inFavourites()" (click)="addFavourite(element)" >Añadir a Favoritos</button>
-  <button *ngIf="inFavourites()">Añadido a Favoritos</button>
-</div>
-
-<div>
-  <table>
-    <thead>
-      <tr>
-        <td><b>Director</b></td>
-        <td><b>País</b></td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{director.name}}</td>
-        <td>{{production_countries[0].iso_3166_1}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-    <div *ngFor="let genre of genres">
-      <button>{{genre.name}}</button>
+<div class="detail-container">
+  <img id="backdrop" src={{backdrop_path}} alt="Poster Show">
+  <div id="Info">
+    <div id="Title">
+      <p ><b>{{title}}</b></p>
+      <p>{{release_date}} | {{runtime}} mins | PG</p>
+    </div>
+    <div id="rating">
+      <div id="average">
+        <span ><b>{{vote_average}}</b></span> 
+        <button *ngIf="!inFavourites()" (click)="addFavourite(element)" >Añadir a Favoritos</button>
+        <button *ngIf="inFavourites()">Añadido a Favoritos</button>
+      </div>
+      <app-rating [vote_average]=vote_average></app-rating> 
     </div>
   </div>
+</div>
+
+<br>
+<br>
+
+<div id="details-container">
+  <div>
+    <div class="info">
+      <p><b>Director</b></p>
+      <br>
+      <p>{{director.name}}</p>
+    </div>
+    <div class="info">
+      <p><b>País</b></p>
+      <br>
+      <p>{{production_countries[0].iso_3166_1}}</p>
+    </div>
+    <div class="info2">
+      <br>
+      <div class="inline" *ngFor="let genre of genres">
+        <button>{{genre.name}}</button>
+      </div>
+    </div>
+  </div>  
+
+  <br>
+  <br>
 
   <div>
     <h2>Sinopsis</h2>
     <p>{{overview}}</p>
   </div>
+  <br>
+  <br>
   <button><img>Visualizar</button>
   <button><img>Descarga</button>
-
+  <br>
+  <br>
+  <br>
   <div>
     <h2>Reparto</h2>
-    <div>Carrousel de cast</div>
+    <br>
+    <br>
+    <img id="cast" src="../../../assets/img/castPlaceholder.jpg" alt="Cast">
   </div>
+  <br>
+  <br>
 </div>
