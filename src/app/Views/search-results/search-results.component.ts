@@ -23,9 +23,11 @@ export class SearchResultsComponent {
     if (this.router.url.includes("/movies")){
       this.pageTitle = "Movies";      
       this.retrievePopularMovies();
+      this.queriedShows = [];
     } else if (this.router.url.includes("/series")){
       this.pageTitle = "Series";
       this.retrievePopularSeries();
+      this.queriedMovies = [];
     } else if (this.router.url.includes("/search/")){
       this.pageTitle = "Resultados Búsqueda";
       this.searchResults();
@@ -39,7 +41,6 @@ export class SearchResultsComponent {
   };
 
   private myList(): void{
-    //this.resultadosBusqueda = this.favourites.myFavourites;
     let temp = localStorage.getItem('myFavourites');
     temp != null? this.resultadosBusqueda = JSON.parse(temp) : this.resultadosBusqueda = [];   
   }

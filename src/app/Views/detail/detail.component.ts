@@ -36,7 +36,6 @@ export class DetailComponent {
   };
 
   inFavourites(): boolean{
-    //return this.favourites.inFavourites(this.element);
     let temp = localStorage.getItem('myFavourites');
     let myFavourites: (DetailsMovieApiResponse | DetailsSeriesApiResponse)[] = [];
     if (temp == null || temp[0] == null){
@@ -53,7 +52,6 @@ export class DetailComponent {
   }
 
   addFavourite(element: DetailsMovieApiResponse | DetailsSeriesApiResponse){
-    //this.favourites.addFavourite(element);       
     let temp = localStorage.getItem('myFavourites');
     let myFavourites: (DetailsMovieApiResponse | DetailsSeriesApiResponse)[] = [];
     if (temp != null && temp[0] != null){
@@ -62,7 +60,7 @@ export class DetailComponent {
       myFavourites = [];
     } 
     myFavourites.push(element);  
-    localStorage.setItem('myFavourites', JSON.stringify(myFavourites))
+    localStorage.setItem('myFavourites', JSON.stringify(myFavourites));
   }
 
   private retrieveMovieDetails(queryString: string){

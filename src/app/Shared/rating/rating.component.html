@@ -1,7 +1,9 @@
 <div class="rating" (mouseenter)="isHover = true" (mouseleave)="isHover = false" (click)="ToggleModal()">
-    <div *ngIf="isShown">
-        <img src="../../../assets/Patatas/muchaspatatas.jpg">
-    </div>
+    <div class="modal" *ngIf="isShown">
+        <div class="modalContent">
+            <p>Se ha guardado la puntuación</p>
+        </div>
+    </div>      
     
     <img *ngIf="!isHover" src={{stars}} alt="Rating Global">
 
