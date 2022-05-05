@@ -12,18 +12,15 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./search-results.component.scss']
 })
 export class SearchResultsComponent {
-  pageTitle = "";
-
-  //queriedMovies: (DiscoverMoviesList | SearchMoviesList)[] = [];      // 
-  //queriedSeries: (DiscoverSeriesList | SearchSeriesList)[] = [];       // CAMBIAR DE LISTA A APIRESPONSE PARA HACER LA PAGINACION
-  //resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];   // 
+  pageTitle = ""; 
 
   queriedMovies: (DiscoverMoviesApiResponse | SearchMoviesApiResponse) = {} as DiscoverMoviesApiResponse;      
   queriedSeries: (DiscoverSeriesApiResponse | SearchSeriesApiResponse) = {} as DiscoverSeriesApiResponse;       
   resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];
   page: string | null = null;
   searchQuery: string | null = null;
-  totalPages: number = 0;   
+  totalPages: number = 0;  
+  currentPage: number = 0; 
 
   constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private route: ActivatedRoute, private clientHttpService: ClientHttpService){};
 
@@ -47,13 +44,19 @@ export class SearchResultsComponent {
     //  this.retrievePopular(this.page);      
     //}    
 
-    this.route.params.subscribe({
-      next: () => {        
+    this.route.params.subscribe({                                   // -> parametros de app-routing        
+      next: ( ) => { 
+        this.route.queryParams.subscribe({
+          next: (hola:any) => {   // -> parametros de ?, que son especificos para esta ruta de app-routing
+          console.log("queryParams");
+          console.log(hola.page);
+          }
+        });   
+        //console.log("routeParams");
+        //console.log(routeParams);    
         this.page = this.route.snapshot.paramMap.get('page');
         this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
-        console.log(this.page);
 
-        console.log("hola");
         if (this.router.url.includes("/movies")){
           this.pageTitle = "Movies";      
           this.retrievePopularMovies(this.page);
@@ -84,6 +87,7 @@ export class SearchResultsComponent {
       next: (data : DiscoverMoviesApiResponse) => { 
         this.resultadosBusqueda = data.results;
         this.totalPages = data.total_pages; 
+        this.currentPage = data.page;
       },
       error: () => {console.log("failure");}
     });    
@@ -95,6 +99,7 @@ export class SearchResultsComponent {
         console.log(data);
         this.resultadosBusqueda = data.results;
         this.totalPages = data.total_pages; 
+        this.currentPage = data.page;
       },
       error: () => {console.log("failure");}
     });
@@ -123,6 +128,7 @@ export class SearchResultsComponent {
             }
             this.resultadosBusqueda = tempArray;
             this.totalPages = this.queriedMovies.total_pages + this.queriedSeries.total_pages; 
+            this.currentPage = this.queriedMovies.page;
           }
         });
       }
@@ -206,6 +212,8 @@ export class SearchResultsComponent {
                   }
                 }
                 this.resultadosBusqueda = tempArray;
+                this.totalPages = this.queriedMovies.total_pages + this.queriedSeries.total_pages; 
+                this.currentPage = this.queriedMovies.page;
               },
               error: () => {console.log("failure");}
             });
@@ -214,7 +222,18 @@ export class SearchResultsComponent {
         error: () => {console.log("failure");}
       });      
     }
+  }
 
+  changeCurrentPage(num:number){
+    //this.router.navigate([this.router.url + "/" + this.currentPage], 
+    //); 
+    this.router.navigate([], 
+      {
+        relativeTo: this.route,
+        queryParams: {page: this.currentPage+num}, 
+        queryParamsHandling: 'merge', 
+      }
+    ); 
   }
 }
 

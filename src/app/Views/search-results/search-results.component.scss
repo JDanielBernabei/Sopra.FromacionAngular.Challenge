@@ -14,3 +14,15 @@ app-barra-busqueda{
   width: 18%;
   margin: 1%;
 }
+
+#paginado{
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+#curentPage{
+  font-size: 150%;
+  margin-left: 10px;
+  margin-right: 10px;
+}

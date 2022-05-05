@@ -7,5 +7,14 @@
         <app-show-miniature  [show]=resultadoBusqueda ></app-show-miniature>
       </div> 
       <p *ngIf="resultadosBusqueda.length == 0">No hay registros para los criterios seleccionados</p>
+    </div>
+    <br>   
+    <br>
+    <div id="paginado">
+      <span *ngIf="currentPage > 1" (click)="changeCurrentPage(-1)">&#10094;</span>
+      <span id="curentPage"><b>{{currentPage}}</b></span> 
+      <span *ngIf="currentPage < totalPages" (click)="changeCurrentPage(+1)">&#10095;</span>
     </div>   
+    <br>
+    <br>
 </div>
