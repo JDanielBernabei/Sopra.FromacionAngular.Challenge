@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router} from '@angular/router';
-import { DiscoverMoviesApiResponse, DiscoverMoviesList, DiscoverSeriesApiResponse, DiscoverSeriesList } from 'src/app/Shared/Models/DiscoverAPIs';
+import { DiscoverMoviesApiResponse, DiscoverSeriesApiResponse } from 'src/app/Shared/Models/DiscoverAPIs';
 import { SearchMoviesApiResponse, SearchMoviesList, SearchSeriesApiResponse, SearchSeriesList } from 'src/app/Shared/Models/SearchAPIs';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SearchResultsComponent {
   pageTitle = ""; 
-
   queriedMovies: (DiscoverMoviesApiResponse | SearchMoviesApiResponse) = {} as DiscoverMoviesApiResponse;      
   queriedSeries: (DiscoverSeriesApiResponse | SearchSeriesApiResponse) = {} as DiscoverSeriesApiResponse;       
   resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];
@@ -22,28 +20,9 @@ export class SearchResultsComponent {
   totalPages: number = 0;  
   currentPage: number = 0; 
 
-  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private route: ActivatedRoute, private clientHttpService: ClientHttpService){};
+  constructor(private router: Router, private route: ActivatedRoute, private clientHttpService: ClientHttpService){};
 
   ngOnInit(): void {
-    //this.page = this.route.snapshot.paramMap.get('page');
-    //
-    //if (this.router.url.includes("/movies")){
-    //  this.pageTitle = "Movies";      
-    //  this.retrievePopularMovies(this.page);
-    //} else if (this.router.url.includes("/series")){
-    //  this.pageTitle = "Series";
-    //  this.retrievePopularSeries(this.page);
-    //} else if (this.router.url.includes("/search")){
-    //  this.pageTitle = "Resultados Búsqueda";
-    //  this.searchResults(this.page);
-    //} else if (this.router.url.includes("/myList")){
-    //  this.pageTitle = "Mi Lista";
-    //  this.myList();
-    //} else {
-    //  this.pageTitle = "Descubre";
-    //  this.retrievePopular(this.page);      
-    //}    
-
     this.route.params.subscribe({                                   // -> parametros de app-routing        
       next: ( ) => { 
         this.route.queryParams.subscribe({
@@ -71,27 +50,6 @@ export class SearchResultsComponent {
             }    
           }
         });   
-        //console.log("routeParams");
-        //console.log(routeParams);    
-        //this.page = this.route.snapshot.paramMap.get('page');
-        //this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
-        //
-        //if (this.router.url.includes("/movies")){
-        //  this.pageTitle = "Movies";      
-        //  this.retrievePopularMovies(this.page);
-        //} else if (this.router.url.includes("/series")){
-        //  this.pageTitle = "Series";
-        //  this.retrievePopularSeries(this.page);
-        //} else if (this.router.url.includes("/search")){
-        //  this.pageTitle = "Resultados Búsqueda";
-        //  this.searchResults(this.page);
-        //} else if (this.router.url.includes("/myList")){
-        //  this.pageTitle = "Mi Lista";
-        //  this.myList();
-        //} else {
-        //  this.pageTitle = "Descubre";
-        //  this.retrievePopular(this.page);      
-        //}    
       }
     });
   };
@@ -155,62 +113,6 @@ export class SearchResultsComponent {
   }  
 
   private  searchResults(page: string | null):void{
-    //this.resultadosBusquedaService.searchMovies.subscribe({
-    //  next: (data: SearchMoviesApiResponse) => {
-    //    this.queriedMovies = data; 
-    //
-    //    this.resultadosBusquedaService.searchSeries.subscribe(
-    //      (data: SearchSeriesApiResponse) => {
-    //        this.queriedSeries = data;  
-    //
-    //        let tempArray = [];
-    //        for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
-    //          if (i < this.queriedMovies.results.length) {
-    //            tempArray.push(this.queriedMovies.results[i++]);
-    //          }
-    //          if (j < this.queriedSeries.results.length) {
-    //            tempArray.push(this.queriedSeries.results[j++]);
-    //          }
-    //        }
-    //        this.resultadosBusqueda = tempArray;
-    //      }
-    //    );
-    //  }
-    //}); 
-
-    //this.router.events.subscribe({
-    //  next: () => {
-    //    let searchQuery = this.route.snapshot.paramMap.get('searchQuery');
-    //    if (searchQuery != null){
-    //      this.clientHttpService.getMoviesByQuery(searchQuery, page).subscribe({   
-    //        next: (data : SearchMoviesApiResponse) => { 
-    //          this.queriedMovies = data; 
-    //          if (searchQuery != null){
-    //            this.clientHttpService.getShowsByQuery(searchQuery, page).subscribe({
-    //              next: (data : SearchSeriesApiResponse) => {  
-    //                this.queriedSeries = data;        
-    //                
-    //                let tempArray = [];
-    //                for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
-    //                  if (i < this.queriedMovies.results.length) {
-    //                    tempArray.push(this.queriedMovies.results[i++]);
-    //                  }
-    //                  if (j < this.queriedSeries.results.length) {
-    //                    tempArray.push(this.queriedSeries.results[j++]);
-    //                  }
-    //                }
-    //                this.resultadosBusqueda = tempArray;
-    //              },
-    //              error: () => {console.log("failure");}
-    //            });
-    //          }
-    //        },
-    //        error: () => {console.log("failure");}
-    //      });      
-    //    }
-    //  }
-    //});
-
     let searchQuery = this.route.snapshot.paramMap.get('searchQuery');      
     if (searchQuery != null){
       this.clientHttpService.getMoviesByQuery(searchQuery, page).subscribe({   
@@ -244,8 +146,6 @@ export class SearchResultsComponent {
   }
 
   changeCurrentPage(num:number){
-    //this.router.navigate([this.router.url + "/" + this.currentPage], 
-    //); 
     this.router.navigate([], 
       {
         relativeTo: this.route,

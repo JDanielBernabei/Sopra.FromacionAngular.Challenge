@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
-import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 import {Router} from '@angular/router';
-import { SearchMoviesApiResponse, SearchSeriesApiResponse } from '../Models/SearchAPIs';
 
 @Component({
   selector: 'app-barra-busqueda',
@@ -11,7 +8,7 @@ import { SearchMoviesApiResponse, SearchSeriesApiResponse } from '../Models/Sear
 })
 export class BarraBusquedaComponent{
 
-  constructor(private clientHttpService: ClientHttpService, private resultadosBusquedaService: ResultadosBusquedaService, private route:Router) { }
+  constructor(private route:Router) { }
 
   searchQuery(keyword : string){  
     this.clearOldSearches();
@@ -22,19 +19,6 @@ export class BarraBusquedaComponent{
       searches.push({date: new Date().getTime(), search: keyword})
       localStorage.setItem('searchHistory', JSON.stringify(searches));
     } 
-
-    //this.clientHttpService.getMoviesByQuery(keyword).subscribe({   
-    //  next: (data : SearchMoviesApiResponse) => { 
-    //    this.resultadosBusquedaService.sendMoviesResults(data); 
-    //  },
-    //  error: () => {console.log("failure");}
-    //});
-    //this.clientHttpService.getShowsByQuery(keyword).subscribe({
-    //  next: (data : SearchSeriesApiResponse) => {  
-    //    this.resultadosBusquedaService.sendSeriesResults(data);             
-    //  },
-    //  error: () => {console.log("failure");}
-    //});  
     this.route.navigate(['search/' + keyword]); 
   }
 
