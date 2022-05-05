@@ -1,4 +1,6 @@
 export interface DiscoverMoviesApiResponse{
+    page: number;
+    total_pages: number;
     results: DiscoverMoviesList[];
 }
 
@@ -11,7 +13,9 @@ export interface DiscoverMoviesList{
     vote_average: number;
 }
 
-export interface DiscoverSeriesApiResponse{
+export interface DiscoverSeriesApiResponse{    
+    page: number;
+    total_pages: number;
     results: DiscoverSeriesList[];
 }
 

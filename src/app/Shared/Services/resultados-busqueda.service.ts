@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
-import { SearchMoviesList, SearchSeriesList } from '../Models/SearchAPIs';
+import { SearchMoviesApiResponse, SearchSeriesApiResponse } from '../Models/SearchAPIs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResultadosBusquedaService {
-  private searchMoviesSource = new BehaviorSubject<SearchMoviesList[]>([]);
-  private searchSeriesSource = new BehaviorSubject<SearchSeriesList[]>([]);
+  private searchMoviesSource = new BehaviorSubject<SearchMoviesApiResponse>({} as SearchMoviesApiResponse);
+  private searchSeriesSource = new BehaviorSubject<SearchSeriesApiResponse>({} as SearchSeriesApiResponse);
 
   searchMovies = this.searchMoviesSource.asObservable();
   searchSeries = this.searchSeriesSource.asObservable();
 
   constructor() { }  
 
-  sendMoviesResults(message: SearchMoviesList[]) { 
+  sendMoviesResults(message: SearchMoviesApiResponse) { 
     this.searchMoviesSource.next(message);
   }
-  sendSeriesResults(message: SearchSeriesList[]) {
+  sendSeriesResults(message: SearchSeriesApiResponse) {
     this.searchSeriesSource.next(message);  
   }  
 }

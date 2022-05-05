@@ -6,10 +6,16 @@ import { DetailComponent } from './Views/detail/detail.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'search', component: SearchResultsComponent },
+  { path: 'discover', component: SearchResultsComponent },
   { path: 'search/:searchQuery', component: SearchResultsComponent },
   { path: 'movies', component: SearchResultsComponent },
   { path: 'series', component: SearchResultsComponent },
+
+  { path: 'discover/:page', component: SearchResultsComponent },
+  { path: 'search/:searchQuery/:page', component: SearchResultsComponent },
+  { path: 'movies/:page', component: SearchResultsComponent },
+  { path: 'series/:page', component: SearchResultsComponent },
+
   { path: 'showDetail/movie/:id', component: DetailComponent },
   { path: 'showDetail/serie/:id', component: DetailComponent },
   { path: 'myList', component: SearchResultsComponent },

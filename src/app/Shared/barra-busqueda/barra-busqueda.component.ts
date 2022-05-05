@@ -3,7 +3,6 @@ import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
 import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
 import {Router} from '@angular/router';
 import { SearchMoviesApiResponse, SearchSeriesApiResponse } from '../Models/SearchAPIs';
-import { compileDeclareNgModuleFromMetadata } from '@angular/compiler';
 
 @Component({
   selector: 'app-barra-busqueda',
@@ -24,18 +23,18 @@ export class BarraBusquedaComponent{
       localStorage.setItem('searchHistory', JSON.stringify(searches));
     } 
 
-    this.clientHttpService.getMoviesByQuery(keyword).subscribe({   
-      next: (data : SearchMoviesApiResponse) => { 
-        this.resultadosBusquedaService.sendMoviesResults(data.results); 
-      },
-      error: () => {console.log("failure");}
-    });
-    this.clientHttpService.getShowsByQuery(keyword).subscribe({
-      next: (data : SearchSeriesApiResponse) => {  
-        this.resultadosBusquedaService.sendSeriesResults(data.results);             
-      },
-      error: () => {console.log("failure");}
-    });  
+    //this.clientHttpService.getMoviesByQuery(keyword).subscribe({   
+    //  next: (data : SearchMoviesApiResponse) => { 
+    //    this.resultadosBusquedaService.sendMoviesResults(data); 
+    //  },
+    //  error: () => {console.log("failure");}
+    //});
+    //this.clientHttpService.getShowsByQuery(keyword).subscribe({
+    //  next: (data : SearchSeriesApiResponse) => {  
+    //    this.resultadosBusquedaService.sendSeriesResults(data);             
+    //  },
+    //  error: () => {console.log("failure");}
+    //});  
     this.route.navigate(['search/' + keyword]); 
   }
 

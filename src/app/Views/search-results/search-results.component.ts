@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Router} from '@angular/router';
 import { DiscoverMoviesApiResponse, DiscoverMoviesList, DiscoverSeriesApiResponse, DiscoverSeriesList } from 'src/app/Shared/Models/DiscoverAPIs';
-import { SearchMoviesList, SearchSeriesList } from 'src/app/Shared/Models/SearchAPIs';
+import { SearchMoviesApiResponse, SearchMoviesList, SearchSeriesApiResponse, SearchSeriesList } from 'src/app/Shared/Models/SearchAPIs';
 import { ClientHttpService } from 'src/app/Shared/Services/client-http.service';
 import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busqueda.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-search-results',
@@ -13,31 +14,64 @@ import {ResultadosBusquedaService} from 'src/app/Shared/Services/resultados-busq
 export class SearchResultsComponent {
   pageTitle = "";
 
-  queriedMovies: (DiscoverMoviesList | SearchMoviesList)[] = [];      // 
-  queriedShows: (DiscoverSeriesList | SearchSeriesList)[] = [];       // CAMBIAR DE LISTA A APIRESPONSE PARA HACER LA PAGINACION
-  resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];   // 
+  //queriedMovies: (DiscoverMoviesList | SearchMoviesList)[] = [];      // 
+  //queriedSeries: (DiscoverSeriesList | SearchSeriesList)[] = [];       // CAMBIAR DE LISTA A APIRESPONSE PARA HACER LA PAGINACION
+  //resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];   // 
 
-  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private clientHttpService: ClientHttpService){};
+  queriedMovies: (DiscoverMoviesApiResponse | SearchMoviesApiResponse) = {} as DiscoverMoviesApiResponse;      
+  queriedSeries: (DiscoverSeriesApiResponse | SearchSeriesApiResponse) = {} as DiscoverSeriesApiResponse;       
+  resultadosBusqueda: (SearchMoviesList | SearchSeriesList)[] = [];
+  page: string | null = null;
+  searchQuery: string | null = null;
+  totalPages: number = 0;   
+
+  constructor(private resultadosBusquedaService: ResultadosBusquedaService, private router: Router, private route: ActivatedRoute, private clientHttpService: ClientHttpService){};
 
   ngOnInit(): void {
-    if (this.router.url.includes("/movies")){
-      this.pageTitle = "Movies";      
-      this.retrievePopularMovies();
-      this.queriedShows = [];
-    } else if (this.router.url.includes("/series")){
-      this.pageTitle = "Series";
-      this.retrievePopularSeries();
-      this.queriedMovies = [];
-    } else if (this.router.url.includes("/search/")){
-      this.pageTitle = "Resultados Búsqueda";
-      this.searchResults();
-    } else if (this.router.url.includes("/myList")){
-      this.pageTitle = "Mi Lista";
-      this.myList();
-    } else {
-      this.pageTitle = "Descubre";
-      this.retrievePopular();      
-    }    
+    //this.page = this.route.snapshot.paramMap.get('page');
+    //
+    //if (this.router.url.includes("/movies")){
+    //  this.pageTitle = "Movies";      
+    //  this.retrievePopularMovies(this.page);
+    //} else if (this.router.url.includes("/series")){
+    //  this.pageTitle = "Series";
+    //  this.retrievePopularSeries(this.page);
+    //} else if (this.router.url.includes("/search")){
+    //  this.pageTitle = "Resultados Búsqueda";
+    //  this.searchResults(this.page);
+    //} else if (this.router.url.includes("/myList")){
+    //  this.pageTitle = "Mi Lista";
+    //  this.myList();
+    //} else {
+    //  this.pageTitle = "Descubre";
+    //  this.retrievePopular(this.page);      
+    //}    
+
+    this.route.params.subscribe({
+      next: () => {        
+        this.page = this.route.snapshot.paramMap.get('page');
+        this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
+        console.log(this.page);
+
+        console.log("hola");
+        if (this.router.url.includes("/movies")){
+          this.pageTitle = "Movies";      
+          this.retrievePopularMovies(this.page);
+        } else if (this.router.url.includes("/series")){
+          this.pageTitle = "Series";
+          this.retrievePopularSeries(this.page);
+        } else if (this.router.url.includes("/search")){
+          this.pageTitle = "Resultados Búsqueda";
+          this.searchResults(this.page);
+        } else if (this.router.url.includes("/myList")){
+          this.pageTitle = "Mi Lista";
+          this.myList();
+        } else {
+          this.pageTitle = "Descubre";
+          this.retrievePopular(this.page);      
+        }    
+      }
+    });
   };
 
   private myList(): void{
@@ -45,70 +79,142 @@ export class SearchResultsComponent {
     temp != null? this.resultadosBusqueda = JSON.parse(temp) : this.resultadosBusqueda = [];   
   }
 
-  private retrievePopularMovies():void{
-    this.clientHttpService.getPopularMovies().subscribe({
+  private retrievePopularMovies(page: string | null):void{
+    this.clientHttpService.getPopularMovies(page).subscribe({
       next: (data : DiscoverMoviesApiResponse) => { 
         this.resultadosBusqueda = data.results;
+        this.totalPages = data.total_pages; 
       },
       error: () => {console.log("failure");}
     });    
   }
 
-  private retrievePopularSeries(): void{
-    this.clientHttpService.getPopularSeries().subscribe({
+  private retrievePopularSeries(page: string | null): void{
+    this.clientHttpService.getPopularSeries(page).subscribe({
       next: (data : DiscoverSeriesApiResponse) => { 
+        console.log(data);
         this.resultadosBusqueda = data.results;
+        this.totalPages = data.total_pages; 
       },
       error: () => {console.log("failure");}
     });
   }
 
-  private  retrievePopular():void{
-    this.clientHttpService.getPopularMovies().subscribe({
+  private  retrievePopular(page: string | null):void{
+    this.clientHttpService.getPopularMovies(page).subscribe({
       next: (data: DiscoverMoviesApiResponse) => {        
-        this.queriedMovies = data.results;       
+        this.queriedMovies = data;       
         
-        this.clientHttpService.getPopularSeries().subscribe({
+        console.log(page);
+        console.log(this.queriedMovies);
+        
+        this.clientHttpService.getPopularSeries(page).subscribe({
           next: (data: DiscoverSeriesApiResponse) => {
-            this.queriedShows = data.results;  
+            this.queriedSeries = data;  
 
             let tempArray = [];
-            for (var i=0, j=0, k=0; i < this.queriedMovies.length || j < this.queriedShows.length;) {
-              if (i < this.queriedMovies.length) {
-                tempArray.push(this.queriedMovies[i++]); 
+            for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
+              if (i < this.queriedMovies.results.length) {
+                tempArray.push(this.queriedMovies.results[i++]); 
               }
-              if (j < this.queriedShows.length) {
-                tempArray.push(this.queriedShows[j++]);
+              if (j < this.queriedSeries.results.length) {
+                tempArray.push(this.queriedSeries.results[j++]);
               }
             }
             this.resultadosBusqueda = tempArray;
+            this.totalPages = this.queriedMovies.total_pages + this.queriedSeries.total_pages; 
           }
         });
       }
     });    
   }  
 
-  private  searchResults():void{
-    this.resultadosBusquedaService.searchMovies.subscribe({
-      next: (data: SearchMoviesList[]) => {
-        this.queriedMovies = data; 
+  private  searchResults(page: string | null):void{
+    //this.resultadosBusquedaService.searchMovies.subscribe({
+    //  next: (data: SearchMoviesApiResponse) => {
+    //    this.queriedMovies = data; 
+    //
+    //    this.resultadosBusquedaService.searchSeries.subscribe(
+    //      (data: SearchSeriesApiResponse) => {
+    //        this.queriedSeries = data;  
+    //
+    //        let tempArray = [];
+    //        for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
+    //          if (i < this.queriedMovies.results.length) {
+    //            tempArray.push(this.queriedMovies.results[i++]);
+    //          }
+    //          if (j < this.queriedSeries.results.length) {
+    //            tempArray.push(this.queriedSeries.results[j++]);
+    //          }
+    //        }
+    //        this.resultadosBusqueda = tempArray;
+    //      }
+    //    );
+    //  }
+    //}); 
 
-        this.resultadosBusquedaService.searchSeries.subscribe(
-          (data: SearchSeriesList[]) => {
-            this.queriedShows = data;  
+    //this.router.events.subscribe({
+    //  next: () => {
+    //    let searchQuery = this.route.snapshot.paramMap.get('searchQuery');
+    //    if (searchQuery != null){
+    //      this.clientHttpService.getMoviesByQuery(searchQuery, page).subscribe({   
+    //        next: (data : SearchMoviesApiResponse) => { 
+    //          this.queriedMovies = data; 
+    //          if (searchQuery != null){
+    //            this.clientHttpService.getShowsByQuery(searchQuery, page).subscribe({
+    //              next: (data : SearchSeriesApiResponse) => {  
+    //                this.queriedSeries = data;        
+    //                
+    //                let tempArray = [];
+    //                for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
+    //                  if (i < this.queriedMovies.results.length) {
+    //                    tempArray.push(this.queriedMovies.results[i++]);
+    //                  }
+    //                  if (j < this.queriedSeries.results.length) {
+    //                    tempArray.push(this.queriedSeries.results[j++]);
+    //                  }
+    //                }
+    //                this.resultadosBusqueda = tempArray;
+    //              },
+    //              error: () => {console.log("failure");}
+    //            });
+    //          }
+    //        },
+    //        error: () => {console.log("failure");}
+    //      });      
+    //    }
+    //  }
+    //});
 
-            let tempArray = [];
-            for (var i=0, j=0, k=0; i < this.queriedMovies.length || j < this.queriedShows.length;) {
-              if (i < this.queriedMovies.length) {
-                tempArray.push(this.queriedMovies[i++]);
-              }
-              if (j < this.queriedShows.length) {
-                tempArray.push(this.queriedShows[j++]);
-              }
-            }
-            this.resultadosBusqueda = tempArray;
-        });
-      }
-    }); 
+    let searchQuery = this.route.snapshot.paramMap.get('searchQuery');      
+    if (searchQuery != null){
+      this.clientHttpService.getMoviesByQuery(searchQuery, page).subscribe({   
+        next: (data : SearchMoviesApiResponse) => { 
+          this.queriedMovies = data; 
+          if (searchQuery != null){
+            this.clientHttpService.getShowsByQuery(searchQuery, page).subscribe({
+              next: (data : SearchSeriesApiResponse) => {  
+                this.queriedSeries = data;        
+                
+                let tempArray = [];
+                for (var i=0, j=0, k=0; i < this.queriedMovies.results.length || j < this.queriedSeries.results.length;) {
+                  if (i < this.queriedMovies.results.length) {
+                    tempArray.push(this.queriedMovies.results[i++]);
+                  }
+                  if (j < this.queriedSeries.results.length) {
+                    tempArray.push(this.queriedSeries.results[j++]);
+                  }
+                }
+                this.resultadosBusqueda = tempArray;
+              },
+              error: () => {console.log("failure");}
+            });
+          }
+        },
+        error: () => {console.log("failure");}
+      });      
+    }
+
   }
 }
+
