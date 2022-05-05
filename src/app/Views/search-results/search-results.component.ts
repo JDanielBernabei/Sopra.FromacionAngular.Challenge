@@ -47,32 +47,51 @@ export class SearchResultsComponent {
     this.route.params.subscribe({                                   // -> parametros de app-routing        
       next: ( ) => { 
         this.route.queryParams.subscribe({
-          next: (hola:any) => {   // -> parametros de ?, que son especificos para esta ruta de app-routing
-          console.log("queryParams");
-          console.log(hola.page);
+          next: (hola:any) => {                                     // -> parametros de ?, que son especificos para esta ruta de app-routing
+            console.log("queryParams");
+            console.log(hola.page);
+            this.page = hola.page;
+            this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
+
+            if (this.router.url.includes("/movies")){
+              this.pageTitle = "Movies";      
+              this.retrievePopularMovies(this.page);
+            } else if (this.router.url.includes("/series")){
+              this.pageTitle = "Series";
+              this.retrievePopularSeries(this.page);
+            } else if (this.router.url.includes("/search")){
+              this.pageTitle = "Resultados Búsqueda";
+              this.searchResults(this.page);
+            } else if (this.router.url.includes("/myList")){
+              this.pageTitle = "Mi Lista";
+              this.myList();
+            } else {
+              this.pageTitle = "Descubre";
+              this.retrievePopular(this.page);      
+            }    
           }
         });   
         //console.log("routeParams");
         //console.log(routeParams);    
-        this.page = this.route.snapshot.paramMap.get('page');
-        this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
-
-        if (this.router.url.includes("/movies")){
-          this.pageTitle = "Movies";      
-          this.retrievePopularMovies(this.page);
-        } else if (this.router.url.includes("/series")){
-          this.pageTitle = "Series";
-          this.retrievePopularSeries(this.page);
-        } else if (this.router.url.includes("/search")){
-          this.pageTitle = "Resultados Búsqueda";
-          this.searchResults(this.page);
-        } else if (this.router.url.includes("/myList")){
-          this.pageTitle = "Mi Lista";
-          this.myList();
-        } else {
-          this.pageTitle = "Descubre";
-          this.retrievePopular(this.page);      
-        }    
+        //this.page = this.route.snapshot.paramMap.get('page');
+        //this.searchQuery = this.route.snapshot.paramMap.get('searchQuery');
+        //
+        //if (this.router.url.includes("/movies")){
+        //  this.pageTitle = "Movies";      
+        //  this.retrievePopularMovies(this.page);
+        //} else if (this.router.url.includes("/series")){
+        //  this.pageTitle = "Series";
+        //  this.retrievePopularSeries(this.page);
+        //} else if (this.router.url.includes("/search")){
+        //  this.pageTitle = "Resultados Búsqueda";
+        //  this.searchResults(this.page);
+        //} else if (this.router.url.includes("/myList")){
+        //  this.pageTitle = "Mi Lista";
+        //  this.myList();
+        //} else {
+        //  this.pageTitle = "Descubre";
+        //  this.retrievePopular(this.page);      
+        //}    
       }
     });
   };
