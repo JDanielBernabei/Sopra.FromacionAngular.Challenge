@@ -48,7 +48,7 @@ export class HomeComponent {
   }
 
   getSlideBackdrop() {    
-    return "https://www.themoviedb.org/t/p/original" + this.slides[this.slideIndex].backdrop_path;
+    return "https://www.themoviedb.org/t/p/w1280" + this.slides[this.slideIndex].backdrop_path;
   }
 
   plusSlides(n: number) {    

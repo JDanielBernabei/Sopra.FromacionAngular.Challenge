@@ -68,7 +68,7 @@ export class DetailComponent {
       next: (data : DetailsMovieApiResponse) => { 
         this.element = data;         
 
-        this.backdrop_path = "https://www.themoviedb.org/t/p/original" + this.element.backdrop_path;      
+        this.backdrop_path = "https://www.themoviedb.org/t/p/w1280" + this.element.backdrop_path;      
         this.genres = this.element.genres;
         this.element.overview != null? this.overview = this.element.overview :  this.overview =  "";
         this.runtime = this.element.runtime;
@@ -92,7 +92,7 @@ export class DetailComponent {
     this.clientHttpService.getSerieDetail(queryString).subscribe({
       next: (data : DetailsSeriesApiResponse) => { 
         this.element = data;
-        this.backdrop_path = "https://www.themoviedb.org/t/p/original" + this.element.backdrop_path;      
+        this.backdrop_path = "https://www.themoviedb.org/t/p/w1280" + this.element.backdrop_path;      
         this.genres = this.element.genres;
         this.element.overview != null? this.overview = this.element.overview :  this.overview =  "";
         this.element.episode_run_time[0] != null? this.runtime = this.element.episode_run_time[0].toString() : this.runtime = '?';

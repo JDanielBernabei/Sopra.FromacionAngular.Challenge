@@ -22,7 +22,7 @@ export class ShowMiniatureComponent {
   constructor(){}
 
   ngOnInit(): void {   
-    this.poster_path = "https://www.themoviedb.org/t/p/original" + this.show.poster_path;
+    this.poster_path = "https://www.themoviedb.org/t/p/w500" + this.show.poster_path;
     this.stars = '../../../assets/img/' + Math.floor(this.show.vote_average/2) + 'stars.jpg';
     if ("title" in this.show) {
       this.title = this.show.title;
